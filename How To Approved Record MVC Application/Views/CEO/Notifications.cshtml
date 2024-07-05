@@ -1,0 +1,39 @@
+﻿@model List<How_To_Approved_Record_MVC_Application.Models.Notification>
+
+<h2>CEO Notifications</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Message</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var notification in Model)
+        {
+            <tr>
+                <td>@notification.Message</td>
+                <td>@notification.CreatedAt</td>
+                <td>
+                    @if (!notification.IsApproved)
+                    {
+                        <form asp-controller="CEO" asp-action="Approve" method="post">
+                            <input type="hidden" name="id" value="@notification.Id" />
+                            <button type="submit" class="btn btn-success">Approve</button>
+                        </form>
+                        <form asp-controller="CEO" asp-action="Reject" method="post">
+                            <input type="hidden" name="id" value="@notification.Id" />
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-success">Approved</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
